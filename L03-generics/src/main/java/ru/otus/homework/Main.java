@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         List<Integer> myList = new DIYArrayList<>();
         
-        ru.otus.homework.UtilsListForHomeWork util = new ru.otus.homework.UtilsListForHomeWork();
+        UtilsListForHomeWork util = new UtilsListForHomeWork();
 
         util.fillRandomNumbers(myList, 30);
         util.printList(myList, "     Исходный список: ");
