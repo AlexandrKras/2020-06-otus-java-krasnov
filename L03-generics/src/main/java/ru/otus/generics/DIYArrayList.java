@@ -4,12 +4,12 @@ import java.util.*;
 
 public class DIYArrayList<E> implements List<E> {
 
-  private final int DefaultIncreaseByTheNumberOfElements = 10;
+  private final int defaultIncreaseByTheNumberOfElements = 10;
   private int size = 0;
   Object[] elementData;
 
   public DIYArrayList() {
-    elementData = new Object[DefaultIncreaseByTheNumberOfElements];
+    elementData = new Object[defaultIncreaseByTheNumberOfElements];
   }
 
   public DIYArrayList(int size) {
@@ -143,7 +143,7 @@ public class DIYArrayList<E> implements List<E> {
 
   private Object[] increase(){
     if (size == elementData.length)
-      return Arrays.copyOf(elementData, size + DefaultIncreaseByTheNumberOfElements);
+      return Arrays.copyOf(elementData, size + defaultIncreaseByTheNumberOfElements);
 
     return elementData;
   }
