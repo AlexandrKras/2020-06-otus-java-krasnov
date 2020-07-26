@@ -4,12 +4,12 @@ import java.util.*;
 
 public class DIYArrayList<E> implements List<E> {
 
+  private final int DefaultIncreaseByTheNumberOfElements = 10;
   private int size = 0;
-  final int defoutl_size = 1000;
   Object[] elementData;
 
   public DIYArrayList() {
-    elementData = new Object[defoutl_size];
+    elementData = new Object[DefaultIncreaseByTheNumberOfElements];
   }
 
   public DIYArrayList(int size) {
@@ -53,8 +53,9 @@ public class DIYArrayList<E> implements List<E> {
 
   @Override
   public boolean add(E e) {
-    elementData[size()] = e;
-    size = size() + 1;
+    elementData = increase();
+    elementData[size] = e;
+    size += 1;
 
     return true;
   }
@@ -138,6 +139,13 @@ public class DIYArrayList<E> implements List<E> {
   @Override
   public List<E> subList(int fromIndex, int toIndex) {
     throw new UnsupportedOperationException();
+  }
+
+  private Object[] increase(){
+    if (size == elementData.length)
+      return Arrays.copyOf(elementData, size + DefaultIncreaseByTheNumberOfElements);
+
+    return elementData;
   }
 
   private class Iter implements Iterator<E> {
