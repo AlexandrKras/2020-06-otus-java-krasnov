@@ -13,7 +13,6 @@ public class RunTests {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            if (handler != null)
                 handler.printResault();
         }
     }
