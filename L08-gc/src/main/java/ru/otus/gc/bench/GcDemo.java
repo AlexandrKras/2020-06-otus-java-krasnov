@@ -50,6 +50,13 @@ http://openjdk.java.net/jeps/158
 */
 
 public class GcDemo {
+    private static long countBuildsYoung = 0;
+    private static long countBuildsOld = 0;
+    private static long timeBuildYoung = 0;
+    private static long timeBuildOld = 0;
+    private static long durationMaxYoung = 0;
+    private static long durationMaxOld = 0;
+
     public static void main(String... args) throws Exception {
         System.out.println("Starting pid: " + ManagementFactory.getRuntimeMXBean().getName());
         switchOnMonitoring();
@@ -64,9 +71,22 @@ public class GcDemo {
         Benchmark mbean = new Benchmark(loopCounter);
         mbs.registerMBean(mbean, name);
         mbean.setSize(size);
-        mbean.run();
+//        mbean.run();
+        int cycle = mbean.run1Minute();
+//        mbean.runOutOfMemory();
 
-        System.out.println("time:" + (System.currentTimeMillis() - beginTime) / 1000);
+        System.out.println("time: " + (System.currentTimeMillis() - beginTime) / 1000);
+        System.out.println("cycle: " + cycle);
+        System.out.println("Count builds:");
+        System.out.println("Young: " + countBuildsYoung);
+        System.out.println("Old: " + countBuildsOld);
+        System.out.println("Time build:");
+        System.out.println("Young: " + timeBuildYoung);
+        System.out.println("Old: " + timeBuildOld);
+        System.out.println("Average Young: " + timeBuildYoung / countBuildsYoung);
+        System.out.println("Average Old: " + timeBuildOld / Math.max(countBuildsOld, 1));
+        System.out.println("Max duration Young: " + durationMaxYoung);
+        System.out.println("Max duration Old: " + durationMaxOld);
     }
 
     private static void switchOnMonitoring() {
@@ -83,11 +103,22 @@ public class GcDemo {
 
                     long startTime = info.getGcInfo().getStartTime();
                     long duration = info.getGcInfo().getDuration();
+                    long id = info.getGcInfo().getId();
 
-                    System.out.println("start:" + startTime + " Name:" + gcName + ", action:" + gcAction + ", gcCause:" + gcCause + "(" + duration + " ms)");
+                    if (gcAction.contains("minor")) {
+                        countBuildsYoung = id;
+                        timeBuildYoung += duration;
+                        durationMaxYoung = Math.max(durationMaxYoung,duration);
+                    } else {
+                        countBuildsOld = id;
+                        timeBuildOld += duration;
+                        durationMaxOld = Math.max(durationMaxOld,duration);
+                    }
+
+                    System.out.println("id: " + id + ", start:" + startTime + " Name:" + gcName + ", action:" + gcAction + ", gcCause:" + gcCause + "(" + duration + " ms)");
                 }
             };
-            emitter.addNotificationListener(listener, null, null);
+            emitter.addNotificationListener(listener, null, emitter);
         }
     }
 }
