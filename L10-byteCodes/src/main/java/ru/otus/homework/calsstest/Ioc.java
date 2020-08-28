@@ -3,9 +3,7 @@ package ru.otus.homework.calsstest;
 import ru.otus.homework.annotations.Log;
 
 import java.lang.reflect.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Ioc {
@@ -18,7 +16,7 @@ public class Ioc {
 
     class DemoInvocationHandler implements InvocationHandler {
         private ITestLogging testLogging;
-        private List<String> logMethodsStr = new ArrayList<>();
+        private Set<String> logMethodsStr = new HashSet<>();
 
         public DemoInvocationHandler(ITestLogging testLogging) {
             this.testLogging = testLogging;
