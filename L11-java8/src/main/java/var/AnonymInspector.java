@@ -4,7 +4,7 @@ public class AnonymInspector {
 
   public static void main(String... __) {
     SimpleClass myCl = new SimpleClass() {
-      //    var myCl = new SimpleClass() {
+//          var myCl = new SimpleClass() {
 
       @Override
       public void print() {
@@ -20,7 +20,7 @@ public class AnonymInspector {
     SimpleClass myCl2 = new SimpleClass();
 
     myCl.print(); // "!!!!!!!New method"
-    //    myCl.newMethod(); // Error
+//        myCl.newMethod(); // Error
     myCl2.print(); // "Hello, World!"
   }
 }
