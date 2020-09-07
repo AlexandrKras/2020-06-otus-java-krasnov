@@ -1,62 +1,50 @@
 package ru.otus.homework.atm.deposit;
 
-import ru.otus.homework.atm.deposit.Banknote.IBanknote;
-import ru.otus.homework.atm.deposit.Banknote.StackBanknotes;
+import ru.otus.homework.atm.deposit.Banknote.Banknote;
+import ru.otus.homework.atm.deposit.DepositBox;
+
+import java.util.Map;
 
 public class CashMachine {
-    private final DepositBox box5000;
-    private final DepositBox box2000;
-    private final DepositBox box1000;
-    private final DepositBox box500;
-    private final DepositBox box200;
-    private final DepositBox box100;
+    private DepositBox deposit;
 
-    public CashMachine() {
-        box5000 = new DepositBox5000();
-        box5000.setCount(1);
-        box2000 = new DepositBox2000();
-        box2000.setCount(100);
-        box1000 = new DepositBox1000();
-        box1000.setCount(100);
-        box500 = new DepositBox500();
-        box500.setCount(100);
-        box200 = new DepositBox200();
-        box200.setCount(100);
-        box100 = new DepositBox100();
-        box100.setCount(100);
-
-        box5000.setNext(box2000);
-        box2000.setNext(box1000);
-        box1000.setNext(box500);
-        box500.setNext(box200);
-        box200.setNext(box100);
+    public CashMachine(DepositBox deposit) {
+        this.deposit = deposit;
     }
 
     public String getMoney(int sum) {
         String mess = validateSum(sum);
-        StackBanknotes stackBanknotes = null;
+        Map<Banknote, Integer> stackBanknotes = null;
         if (mess.isEmpty()) {
-            stackBanknotes = box5000.getBanknotes(sum);
+            stackBanknotes = deposit.getBanknotes(sum);
         } else {
             return mess;
         }
 
-        if (stackBanknotes.getStackBanknotes().isEmpty()) {
+        if (stackBanknotes.isEmpty()) {
             return "Не возможно выдать запрошеную вами сумму";
         }
 
-        return "Сумма " + stackBanknotes.getSum() + " выдана";
+        return "Сумма " + calculateTheAmount(stackBanknotes) + " выдана";
+    }
+
+    private int calculateTheAmount(Map<Banknote, Integer> stackBanknotes) {
+        int sum = 0;
+        for (Map.Entry<Banknote, Integer> entry : stackBanknotes.entrySet()) {
+            sum += entry.getKey().getNominal() * entry.getValue();
+        }
+        return sum;
     }
 
     public String getRemnantMoney() {
-        StackBanknotes stackBanknotes = box5000.getBanknotes(getBalace());
+        Map<Banknote, Integer> stackBanknotes = deposit.getBanknotes(getBalace());
 
-        return "Выдан остаток денежных средств в размере " + stackBanknotes.getSum();
+        return "Выдан остаток денежных средств в размере " + calculateTheAmount(stackBanknotes);
     }
 
-    public String putMoney(IBanknote newBanknote) {
-        IBanknote banknote = box5000.putBanknotes(newBanknote);
-        if (banknote != null) {
+    public String putMoney(Banknote newBanknote) {
+        Banknote banknote2 = deposit.putBanknotes(newBanknote);
+        if (banknote2 != null) {
             return "Неудалось распознать купюру";
         }
         return "Купюра наминалом " + newBanknote.getNominal() + " принята";
@@ -74,30 +62,14 @@ public class CashMachine {
     }
 
     public int getBalace() {
-        return box5000.getBalance();
+        return deposit.getBalance();
     }
 
-    public DepositBox getBox5000() {
-        return box5000;
+    public DepositBox getDeposit() {
+        return deposit;
     }
 
-    public DepositBox getBox2000() {
-        return box2000;
-    }
-
-    public DepositBox getBox1000() {
-        return box1000;
-    }
-
-    public DepositBox getBox500() {
-        return box500;
-    }
-
-    public DepositBox getBox200() {
-        return box200;
-    }
-
-    public DepositBox getBox100() {
-        return box100;
+    public void setDeposit(DepositBox deposit) {
+        this.deposit = deposit;
     }
 }

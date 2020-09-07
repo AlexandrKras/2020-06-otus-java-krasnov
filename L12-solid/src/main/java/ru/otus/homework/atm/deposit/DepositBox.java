@@ -1,30 +1,31 @@
 package ru.otus.homework.atm.deposit;
 
-import ru.otus.homework.atm.deposit.Banknote.IBanknote;
-import ru.otus.homework.atm.deposit.Banknote.StackBanknotes;
+
+import ru.otus.homework.atm.deposit.Banknote.Banknote;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class DepositBox {
     private DepositBox next;
     private int count;
 
-    public StackBanknotes getBanknotes(int sum) {
-        StackBanknotes banknotes = new StackBanknotes();
+    public Map<Banknote, Integer> getBanknotes(int sum) {
+        Map<Banknote, Integer> banknotes = new HashMap<>();
         int remnant = sum;
-        int counttBanknotes = checkBanknotesInBox(sum);
-        for (int n = 0; n < counttBanknotes; n++) {
-            banknotes.addBanknote(createBanknote());
-            --count;
-            remnant -= getNominal();
-        }
+        int countBanknotes = checkBanknotesInBox(sum);
+        banknotes.put(createBanknote(), countBanknotes);
+        count -= countBanknotes;
+        remnant -= getNominal() * countBanknotes;
 
         if (remnant > 0 && getNext() != null) {
-            banknotes.addAllBanknotes(getNext().getBanknotes(remnant).getStackBanknotes());
+            banknotes.putAll(getNext().getBanknotes(remnant));
         }
 
         return banknotes;
     }
 
-    public IBanknote putBanknotes(IBanknote banknote) {
+    public Banknote putBanknotes(Banknote banknote) {
         if (banknote.getNominal() == getNominal()) {
             count++;
         } else {
@@ -57,7 +58,7 @@ public abstract class DepositBox {
         return createBanknote().getNominal();
     }
 
-    protected abstract IBanknote createBanknote();
+    protected abstract Banknote createBanknote();
 
     public DepositBox getNext() {
         return next;
