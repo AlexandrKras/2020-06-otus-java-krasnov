@@ -1,0 +1,2 @@
+oldMsg:Message{field1='field1', field2='field2', field3='field3', field4='null', field5='null', field6='field6', field7='null', field8='null', field9='null', field10='field10', field11='field11', field12='field12', field13='field13'},
+newMsg:Message{field1='field1', field2='field2', field3='field3', field4='concat: field1 field2 field3', field5='null', field6='field6', field7='null', field8='null', field9='null', field10='field10', field11='field13', field12='field12', field13='field11'}
