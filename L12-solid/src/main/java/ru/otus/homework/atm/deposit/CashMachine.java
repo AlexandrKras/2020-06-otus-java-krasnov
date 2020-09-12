@@ -1,75 +1,67 @@
 package ru.otus.homework.atm.deposit;
 
-import ru.otus.homework.atm.deposit.Banknote.Banknote;
-import ru.otus.homework.atm.deposit.DepositBox;
-
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class CashMachine {
-    private DepositBox deposit;
+    private Map<Integer, Integer> storage = new TreeMap<>(Comparator.reverseOrder());
 
-    public CashMachine(DepositBox deposit) {
-        this.deposit = deposit;
-    }
-
-    public String getMoney(int sum) {
-        String mess = validateSum(sum);
-        Map<Banknote, Integer> stackBanknotes = null;
-        if (mess.isEmpty()) {
-            stackBanknotes = deposit.getBanknotes(sum);
-        } else {
-            return mess;
-        }
-
-        if (stackBanknotes.isEmpty()) {
-            return "Не возможно выдать запрошеную вами сумму";
-        }
-
-        return "Сумма " + calculateTheAmount(stackBanknotes) + " выдана";
-    }
-
-    private int calculateTheAmount(Map<Banknote, Integer> stackBanknotes) {
-        int sum = 0;
-        for (Map.Entry<Banknote, Integer> entry : stackBanknotes.entrySet()) {
-            sum += entry.getKey().getNominal() * entry.getValue();
-        }
-        return sum;
-    }
-
-    public String getRemnantMoney() {
-        Map<Banknote, Integer> stackBanknotes = deposit.getBanknotes(getBalace());
-
-        return "Выдан остаток денежных средств в размере " + calculateTheAmount(stackBanknotes);
-    }
-
-    public String putMoney(Banknote newBanknote) {
-        Banknote banknote2 = deposit.putBanknotes(newBanknote);
-        if (banknote2 != null) {
-            return "Неудалось распознать купюру";
-        }
-        return "Купюра наминалом " + newBanknote.getNominal() + " принята";
-    }
-
-    private String validateSum(int sum) {
-        if (sum < 0) {
-            return "Сумма не может быть отрицательной";
-        } else if (sum % 100 != 0) {
-            return "Сумма для выдачи должна быть кратна 100";
-        } else if (getBalace() < sum) {
-            return "Запрошеная сумма превышает баланс банкомата";
-        }
-        return "";
+    public CashMachine(Map<Integer, Integer> storage) {
+        this.storage.putAll(storage);
     }
 
     public int getBalace() {
-        return deposit.getBalance();
+        int result = 0;
+        for (var box : storage.entrySet()) {
+            result += box.getKey() * box.getValue();
+        }
+        return result;
     }
 
-    public DepositBox getDeposit() {
-        return deposit;
+    public Map<Integer, Integer> getCash(int sum) {
+        Map<Integer, Integer> returnBanknotes = new HashMap<>();
+        int remnant = sum;
+        for (var entry : storage.entrySet()) {
+            if (entry.getValue() == 0) {
+                continue;
+            }
+
+            int countBanknotes = checkBanknotesInBox(remnant, entry);
+            returnBanknotes.put(entry.getKey(), countBanknotes);
+            remnant -= entry.getKey() * countBanknotes;
+
+            if (remnant == 0) {
+                break;
+            }
+        }
+
+        if (remnant == 0) {
+            for (var banknotes : returnBanknotes.entrySet()) {
+                storage.put(banknotes.getKey(), storage.get(banknotes.getKey()) - banknotes.getValue());
+            }
+            return returnBanknotes;
+        }
+
+        return null;
     }
 
-    public void setDeposit(DepositBox deposit) {
-        this.deposit = deposit;
+    public Integer putBanknotes(int banknote) {
+        if (storage.get(banknote) != null) {
+            storage.put(banknote, storage.get(banknote) + 1);
+        } else {
+            return banknote;
+        }
+        return null;
+    }
+
+    private int checkBanknotesInBox(int cash, Map.Entry<Integer, Integer> deposit) {
+        int requiredNumberOfBills = cash / deposit.getKey();
+        if (requiredNumberOfBills <= deposit.getValue())
+            return requiredNumberOfBills;
+        else if (requiredNumberOfBills > deposit.getValue())
+            return deposit.getValue();
+        return 0;
     }
 }
