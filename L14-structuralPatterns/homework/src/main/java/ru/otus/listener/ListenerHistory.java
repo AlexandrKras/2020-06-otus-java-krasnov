@@ -1,23 +1,21 @@
 package ru.otus.listener;
 
+import jdk.dynalink.StandardOperation;
+import ru.otus.History;
 import ru.otus.Message;
 
+import javax.net.ssl.StandardConstants;
+import javax.tools.StandardJavaFileManager;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.FileAttribute;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 
 public class ListenerHistory implements Listener {
     @Override
     public void onUpdated(Message oldMsg, Message newMsg) {
         try {
-        Path path = Paths.get("L14-structuralPatterns/resources/history.txt");
-        if (!Files.exists(path))
-            Files.createFile(path);
-        String logString = String.format("oldMsg:%s,\r\nnewMsg:%s", oldMsg, newMsg);
-
-            Files.write(path, logString.getBytes());
+            Path path = Files.createTempFile("structuralPatternsHistory", ".tmp");
+            Files.write(path, History.message2String(oldMsg, newMsg).getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

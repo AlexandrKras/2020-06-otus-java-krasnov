@@ -6,6 +6,7 @@ import ru.otus.listener.ListenerPrinter;
 import ru.otus.processor.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class HomeWork {
 
@@ -25,7 +26,12 @@ public class HomeWork {
 
         var processors = List.of(new ProcessorField11SwapField13(),
                 new ProcessorConcatFields(),
-                new ExceptionProcessor(new ProcessorUpperField10()));
+                new ExceptionProcessor(new ProcessorUpperField10(), new TimeProvider() {
+                    @Override
+                    public long getCurrentTime() {
+                        return TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
+                    }
+                }));
 
         var complexProcessor = new ComplexProcessor(processors, (ex) -> {System.out.println(ex.getMessage());});
         var listenerPrinter = new ListenerPrinter();
