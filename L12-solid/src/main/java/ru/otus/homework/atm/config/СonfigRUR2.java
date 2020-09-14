@@ -3,7 +3,7 @@ package ru.otus.homework.atm.config;
 import java.util.HashMap;
 import java.util.Map;
 
-public class СonfigRUR12102017 implements Сonfiguration{
+public class СonfigRUR2 implements Сonfiguration{
     private enum Banknote {
         B2000(2000),
         B5000(5000),

@@ -8,10 +8,10 @@ public class ConfigurationFactory {
 
     public static Map<Integer, Integer> getConfiguration(String confiName) {
         if (RUR01011999.equals(confiName)) {
-            return new СonfigRUR01011999().createСonfig(10);
+            return new СonfigRUR1().createСonfig(10);
         }
         if (RUR12102017.equals(confiName)) {
-            return new СonfigRUR12102017().createСonfig(10);
+            return new СonfigRUR2().createСonfig(10);
         }
         throw new IllegalArgumentException("unknown param:" + confiName);
     }

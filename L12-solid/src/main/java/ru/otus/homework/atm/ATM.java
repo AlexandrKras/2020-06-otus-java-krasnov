@@ -5,7 +5,7 @@ import ru.otus.homework.atm.deposit.CashMachine;
 import java.util.Map;
 
 public class ATM {
-    private CashMachine cashMachine;
+    private final CashMachine cashMachine;
 
     public ATM(Map<Integer, Integer> depositBox) {
         this.cashMachine = new CashMachine(depositBox);
