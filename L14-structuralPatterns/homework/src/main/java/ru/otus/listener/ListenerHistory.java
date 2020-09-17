@@ -15,7 +15,8 @@ public class ListenerHistory implements Listener {
     public void onUpdated(Message oldMsg, Message newMsg) {
         try {
             Path path = Files.createTempFile("structuralPatternsHistory", ".tmp");
-            Files.write(path, History.message2String(oldMsg, newMsg).getBytes());
+            History history = new History(oldMsg.toString(), newMsg.toString());
+            Files.write(path, history.stringForHistory().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
