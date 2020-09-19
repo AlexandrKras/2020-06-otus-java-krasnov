@@ -11,8 +11,9 @@ dependencies {
     implementation 'com.google.guava:guava'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'javax.json:javax.json-api'
-    implementation 'org.glassfish:javax.json'
-    implementation 'com.google.protobuf:protobuf-java-util'
+    implementation 'org.glassfish:javax.json:1.1.4'
+    implementation 'com.google.protobuf:protobuf-java-util:4.0.0-rc-2'
+
 }
 
 def protoSrcDir = "$projectDir/build/generated"
