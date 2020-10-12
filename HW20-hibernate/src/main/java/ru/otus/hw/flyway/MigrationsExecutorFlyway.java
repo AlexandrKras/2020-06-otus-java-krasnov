@@ -1,4 +1,4 @@
-package ru.otus.flyway;
+package ru.otus.hw.flyway;
 
 import org.flywaydb.core.Flyway;
 import org.hibernate.cfg.Configuration;
