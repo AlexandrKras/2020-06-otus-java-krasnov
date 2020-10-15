@@ -1,4 +1,4 @@
-package ru.otus.flyway;
+package ru.otus.hw.flyway;
 
 public interface MigrationsExecutor {
     void cleanDb();
