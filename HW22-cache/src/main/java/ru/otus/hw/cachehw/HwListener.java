@@ -1,4 +1,4 @@
-package ru.otus.cachehw;
+package ru.otus.hw.cachehw;
 
 /**
  * @author sergey
