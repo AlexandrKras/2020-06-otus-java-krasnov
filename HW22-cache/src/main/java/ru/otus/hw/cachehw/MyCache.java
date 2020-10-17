@@ -2,6 +2,7 @@ package ru.otus.hw.cachehw;
 
 import java.lang.ref.WeakReference;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -12,15 +13,15 @@ import static ru.otus.hw.cachehw.MyCache.Actions.*;
  * created on 14.12.18.
  */
 public class MyCache<K, V> implements HwCache<K, V> {
-    WeakHashMap<K, V> cache = new WeakHashMap();
-    Set<WeakReference<HwListener<K, V>>> listeners = new HashSet<>();
-    Set<Enum<Actions>> typeActions = new HashSet<>();
+    private final Map<K, V> cache = new WeakHashMap();
+    private final Set<WeakReference<HwListener<K, V>>> listeners = new HashSet<>();
+    private final Set<Enum<Actions>> typeActions = new HashSet<>();
 
     @Override
     public void put(K key, V value) {
-        V object = cache.get(key);
+        boolean isNaN = cache.containsKey(key);
         cache.put(key, value);
-        if (object == null) {
+        if (isNaN) {
             doEvent(key, value, CREATE);
         } else {
             doEvent(key, value, UPDATE);
@@ -45,11 +46,7 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     @Override
     public void removeListener(HwListener<K, V> listener) {
-        listeners.remove(listener);
-    }
-
-    private void event(K key, V value, String action) {
-        listeners.forEach(listener -> listener.get().notify(key, value, action));
+        listeners.removeIf(hwListener -> hwListener.get().equals(listener));
     }
 
     public void addAction(Actions action) {
@@ -61,8 +58,12 @@ public class MyCache<K, V> implements HwCache<K, V> {
     }
 
     private void doEvent(K key, V value, Actions action) {
-        if (typeActions.contains(action)) {
-            event(key, value, action.name());
+        try {
+            if (typeActions.contains(action)) {
+                listeners.forEach(listener -> listener.get().notify(key, value, action.name()));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
