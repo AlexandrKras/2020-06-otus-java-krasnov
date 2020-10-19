@@ -60,7 +60,13 @@ public class MyCache<K, V> implements HwCache<K, V> {
     private void doEvent(K key, V value, Actions action) {
         try {
             if (typeActions.contains(action)) {
-                listeners.forEach(listener -> listener.get().notify(key, value, action.name()));
+                for (var hwListener : listeners) {
+                    var listener = hwListener.get();
+                    if (listener == null) {
+                        continue;
+                    }
+                    listener.notify(key, value, action.name());
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
