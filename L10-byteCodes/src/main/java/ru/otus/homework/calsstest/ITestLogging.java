@@ -1,7 +1,5 @@
 package ru.otus.homework.calsstest;
 
-import ru.otus.homework.annotations.Log;
-
 public interface ITestLogging {
     void calculation(int param);
     void calculation(int param1, int param2);

@@ -22,11 +22,11 @@ public class ReferenceDemo {
 
     public static void main(String[] args) throws InterruptedException {
         // strong();
-        //  weak();
+          weak();
         //  soft();
-        //finalizeDemo();
+//        finalizeDemo();
        // phantom();
-        phantomDemo();
+//        phantomDemo();
     }
 
     private static void strong() {

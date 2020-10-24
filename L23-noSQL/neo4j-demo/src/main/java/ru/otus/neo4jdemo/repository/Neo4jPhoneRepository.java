@@ -1,13 +1,11 @@
 package ru.otus.neo4jdemo.repository;
 
 import com.google.gson.Gson;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.Result;
 import ru.otus.neo4jdemo.model.Phone;
-import ru.otus.neo4jdemo.model.PhoneUser;
 
 import java.util.HashMap;
 import java.util.List;

@@ -7,9 +7,9 @@ import org.hibernate.stat.Statistics;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import ru.otus.core.model.User;
-import ru.otus.flyway.MigrationsExecutor;
-import ru.otus.flyway.MigrationsExecutorFlyway;
-import ru.otus.hibernate.HibernateUtils;
+import ru.otus.hw.flyway.MigrationsExecutor;
+import ru.otus.hw.flyway.MigrationsExecutorFlyway;
+import ru.otus.hw.hibernate.HibernateUtils;
 
 public abstract class AbstractHibernateTest {
     private static final String HIBERNATE_CFG_XML_FILE_RESOURCE = "hibernate-test.cfg.xml";

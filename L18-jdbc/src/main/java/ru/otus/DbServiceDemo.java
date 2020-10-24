@@ -6,13 +6,12 @@ import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.jdbc.dao.UserDaoJdbc;
-import ru.otus.core.service.DbServiceUserImpl;
-import ru.otus.jdbc.DbExecutorImpl;
-import ru.otus.h2.DataSourceH2;
 import ru.otus.core.model.User;
+import ru.otus.core.service.DbServiceUserImpl;
+import ru.otus.h2.DataSourceH2;
+import ru.otus.jdbc.DbExecutorImpl;
+import ru.otus.jdbc.dao.UserDaoJdbc;
 import ru.otus.jdbc.sessionmanager.SessionManagerJdbc;
-
 
 
 /**

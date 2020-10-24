@@ -1,6 +1,5 @@
 package ru.otus.l11.encapsulation;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 

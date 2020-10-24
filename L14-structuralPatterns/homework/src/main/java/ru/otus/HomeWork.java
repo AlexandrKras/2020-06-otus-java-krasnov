@@ -3,7 +3,10 @@ package ru.otus;
 import ru.otus.handler.ComplexProcessor;
 import ru.otus.listener.ListenerHistory;
 import ru.otus.listener.ListenerPrinter;
-import ru.otus.processor.*;
+import ru.otus.processor.ExceptionProcessor;
+import ru.otus.processor.ProcessorConcatFields;
+import ru.otus.processor.ProcessorField11SwapField13;
+import ru.otus.processor.ProcessorUpperField10;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +36,9 @@ public class HomeWork {
                     }
                 }));
 
-        var complexProcessor = new ComplexProcessor(processors, (ex) -> {System.out.println(ex.getMessage());});
+        var complexProcessor = new ComplexProcessor(processors, (ex) -> {
+            System.out.println(ex.getMessage());
+        });
         var listenerPrinter = new ListenerPrinter();
         var listenerHistory = new ListenerHistory();
         complexProcessor.addListener(listenerPrinter);
