@@ -20,18 +20,18 @@ import java.util.Map;
 
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 
-public class AdminPanel extends HttpServlet {
+public class AdminPanelServlet extends HttpServlet {
     private static final String PARAM_NAME = "name";
     private static final String PARAM_ADDRESS = "address";
     private static final String PARAM_PHONES = "phones";
     private static final String USERS_PAGE_TEMPLATE = "users.html";
     private static final String TEMPLATE_ATTR_USERS = "users";
 
-    private final Logger logger = LoggerFactory.getLogger(AdminPanel.class);
+    private final Logger logger = LoggerFactory.getLogger(AdminPanelServlet.class);
     private final DBServiceUser dbServiceUser;
     private final TemplateProcessor templateProcessor;
 
-    public AdminPanel(DBServiceUser dbServiceUser, TemplateProcessor templateProcessor) {
+    public AdminPanelServlet(DBServiceUser dbServiceUser, TemplateProcessor templateProcessor) {
         this.dbServiceUser = dbServiceUser;
         this.templateProcessor = templateProcessor;
     }

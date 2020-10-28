@@ -1,13 +1,12 @@
 package ru.otus.hw.core.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,9 +14,9 @@ public class User implements Serializable {
     private long id;
     @Column(name = "name", nullable = false, unique = true)
     private String name;
-    @Column(name = "login", /*nullable = false,*/ unique = true)
+    @Column(name = "login", unique = true)
     private String login;
-    @Column(name = "password"/*, nullable = false*/)
+    @Column(name = "password")
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

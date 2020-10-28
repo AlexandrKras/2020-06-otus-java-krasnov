@@ -19,6 +19,8 @@ public class MigrationsExecutorFlyway implements MigrationsExecutor {
 
         flyway = Flyway.configure()
                 .dataSource(dbUrl, dbUserName, dbPassword)
+                .locations("classpath:/hibernate/db/migration")
+                .repeatableSqlMigrationPrefix("R")
                 .load();
     }
 

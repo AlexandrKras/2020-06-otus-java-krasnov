@@ -1,11 +1,10 @@
 package ru.otus.hw.core.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "address")
-public class AddressDataSet implements Serializable {
+public class AddressDataSet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true)

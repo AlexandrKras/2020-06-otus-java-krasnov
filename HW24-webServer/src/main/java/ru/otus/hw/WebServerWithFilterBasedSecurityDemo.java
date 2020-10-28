@@ -10,7 +10,6 @@ import ru.otus.hw.core.server.UsersWebServerWithFilterBasedSecurity;
 import ru.otus.hw.core.service.*;
 import ru.otus.hw.flyway.MigrationsExecutor;
 import ru.otus.hw.flyway.MigrationsExecutorFlyway;
-import ru.otus.hw.helpers.DataHelper;
 import ru.otus.hw.hibernate.HibernateUtils;
 import ru.otus.hw.hibernate.dao.UserDaoHibernate;
 import ru.otus.hw.hibernate.sessionmanager.SessionManagerHibernate;
@@ -45,8 +44,6 @@ public class WebServerWithFilterBasedSecurityDemo {
         SessionManagerHibernate sessionManager = new SessionManagerHibernate(sessionFactory);
         UserDao userDao = new UserDaoHibernate(sessionManager);
         DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
-
-        DataHelper.fillDb(dbServiceUser);
 
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
         UserAuthService authService = new UserAuthServiceImpl(dbServiceUser);
