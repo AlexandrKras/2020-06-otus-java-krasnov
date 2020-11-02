@@ -3,7 +3,6 @@ package ru.otus.homework.reflection;
 import ru.otus.homework.annotations.After;
 import ru.otus.homework.annotations.Before;
 import ru.otus.homework.annotations.Test;
-import ru.otus.homework.fortest.AHomeWorkTest;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

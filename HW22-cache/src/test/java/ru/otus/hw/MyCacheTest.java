@@ -1,9 +1,6 @@
 package ru.otus.hw;
 
 import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -11,20 +8,20 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.hw.cachehw.HwListener;
-import ru.otus.hw.cachehw.MyCache;
-import ru.otus.hw.core.dao.UserDao;
-import ru.otus.hw.core.model.User;
-import ru.otus.hw.core.service.implementation.DbServiceMyCacheUserImpl;
-import ru.otus.hw.core.service.implementation.DbServiceUserImpl;
+import ru.otus.cachehw.HwListener;
+import ru.otus.cachehw.MyCache;
+import ru.otus.core.dao.UserDao;
+import ru.otus.core.model.User;
+import ru.otus.core.service.implementation.DbServiceMyCacheUserImpl;
+import ru.otus.core.service.implementation.DbServiceUserImpl;
 import ru.otus.hw.h2.DataSourceH2;
-import ru.otus.hw.jdbc.DbExecutorImpl;
-import ru.otus.hw.jdbc.dao.UserDaoJdbcMapper;
-import ru.otus.hw.jdbc.mapper.JdbcMapper;
-import ru.otus.hw.jdbc.mapper.implementation.EntityClassMetaDataImpl;
-import ru.otus.hw.jdbc.mapper.implementation.EntitySQLMetaDataImpl;
-import ru.otus.hw.jdbc.mapper.implementation.JdbcMapperImpl;
-import ru.otus.hw.jdbc.sessionmanager.SessionManagerJdbc;
+import ru.otus.jdbc.DbExecutorImpl;
+import ru.otus.jdbc.dao.UserDaoJdbcMapper;
+import ru.otus.jdbc.mapper.JdbcMapper;
+import ru.otus.jdbc.mapper.implementation.EntityClassMetaDataImpl;
+import ru.otus.jdbc.mapper.implementation.EntitySQLMetaDataImpl;
+import ru.otus.jdbc.mapper.implementation.JdbcMapperImpl;
+import ru.otus.jdbc.sessionmanager.SessionManagerJdbc;
 
 import javax.sql.DataSource;
 

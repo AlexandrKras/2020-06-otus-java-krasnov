@@ -3,7 +3,6 @@ package ru.otus.cassandrademo.db;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
-import com.datastax.oss.driver.api.core.session.Session;
 import lombok.RequiredArgsConstructor;
 import ru.otus.cassandrademo.model.Phone;
 import ru.otus.cassandrademo.model.SmartPhone;

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.AbstractHibernateTest;
 import ru.otus.core.model.User;
-import ru.otus.hibernate.dao.UserDaoHibernate;
-import ru.otus.hibernate.sessionmanager.SessionManagerHibernate;
+import ru.otus.hw.hibernate.dao.UserDaoHibernate;
+import ru.otus.hw.hibernate.sessionmanager.SessionManagerHibernate;
 
 import java.util.Optional;
 

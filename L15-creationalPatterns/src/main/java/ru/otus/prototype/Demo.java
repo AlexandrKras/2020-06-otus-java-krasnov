@@ -1,7 +1,5 @@
 package ru.otus.prototype;
 
-import java.util.Calendar;
-
 /**
  * @author sergey
  * created on 19.09.18.

@@ -3,8 +3,6 @@ package ru.otus.processor;
 import ru.otus.Message;
 import ru.otus.TimeProvider;
 
-import java.util.concurrent.TimeUnit;
-
 public class ExceptionProcessor implements Processor {
     private Processor processor;
     private TimeProvider timeProvider;
