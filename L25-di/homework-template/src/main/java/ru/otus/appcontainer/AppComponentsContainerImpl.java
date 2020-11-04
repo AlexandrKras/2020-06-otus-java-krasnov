@@ -37,20 +37,13 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     }
 
     private void createComponent(Object configObject, Method method) {
-        Object appComponent = null;
+        Object[] args = Arrays.stream(method.getParameters())
+                .map(Parameter::getType)
+                .map(this::getAppComponent)
+                .filter(Objects::nonNull)
+                .toArray(Object[]::new);
 
-        if (method.getParameterCount() == 0) {
-            appComponent = createObject(configObject, method);
-        } else {
-            Parameter[] parameters = method.getParameters();
-            List<Object> args = new ArrayList<>();
-            for (Parameter parameter : parameters) {
-                var param = getAppComponent(parameter.getType());
-                args.add(param);
-            }
-            appComponent = createObject(configObject, method, args.toArray());
-        }
-
+        Object appComponent = createObject(configObject, method, args);
         appComponents.add(appComponent);
         appComponentsByName.put(method.getAnnotation(AppComponent.class).name(), appComponent);
     }
@@ -58,13 +51,9 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     private Object createObject(Object configObject, Method method, Object... args) {
         Object appComponents = null;
         try {
-            if (args == null || args.length == 0) {
-                appComponents = method.invoke(configObject);
-            } else {
-                appComponents = method.invoke(configObject, args);
-            }
+            appComponents = method.invoke(configObject, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(String.format("Не возможно создать экземпляр класса %s", method.getReturnType().getName()), e);
         }
 
         return appComponents;
