@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Create user</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 70px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<form id="create-form" th:action="@{/user/save}" th:object="${user}" th:method="post" accept-charset="utf-8">
+    <h1>New User:</h1>
+
+    <div class="row">
+        <label for="user-name">Имя:</label>
+        <input id="user-name" name="name" type="text" th:value="${user.name}" value="John Doe"/>
+        <label for="user-address">Адрес:</label>
+        <input id="user-address" name="address" type="text" th:value="${user.street}" value="Ленина 45"/>
+        <label for="user-phone">Телефоны:</label>
+        <input id="user-phone" name="phone" type="text" th:value="${user.phone}" value="8 (123) 45 67 890"/>
+    </div>
+
+<!--    <div class="row">-->
+<!--        <label for="holder-input">Name:</label>-->
+<!--        <input id="holder-input" name="name" type="text" th:value="${user.name}" value="John Doe"/>-->
+<!--        <label for="holder-input1">street:</label>-->
+<!--        <input id="holder-input1" name="street" type="text" th:value="${user.street}" value="Ленина 45"/>-->
+
+<!--        <label for="holder-input2">phone:</label>-->
+<!--        <input id="holder-input2" name="phone" type="text" th:value="${user.phone}" value="8 (123) 45 67 890"/>-->
+
+        <!--        <label for="holder-input">Address:</label>-->
+        <!--        <input id="holder-input" name="address" type="text" th:value="${user.addressDataSet.street}" value="Ленина 45"/>-->
+        <!--        <label for="holder-input">phones:</label>-->
+        <!--        <input id="holder-input" name="address" type="text" th:value="${user.phones.number}" value="8 (123) 45 67 890"/>-->
+<!--    </div>-->
+
+    <div class="row">
+        <button type="submit">Save</button>
+    </div>
+</form>
+
+</body>
+</html>
