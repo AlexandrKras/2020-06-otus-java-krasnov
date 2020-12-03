@@ -9,9 +9,12 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class PrintingNumbers {
     private static final Logger logger = LoggerFactory.getLogger(PrintingNumbers.class);
+
     private static final int max_number = 10;
     private static final int min_number = 1;
+
     private final Lock lock = new ReentrantLock();
+
     private int number = 1;
     private String last = "t2";
 
@@ -36,18 +39,17 @@ public class PrintingNumbers {
         String operation = "increase";
         while (!Thread.currentThread().isInterrupted()) {
             String name = Thread.currentThread().getName();
-            if (name.equals(last)) {
-                sleep(100);
-            }
-            lock.lock();
-            try {
-                logger.info("number: {}", number);
-                operation = getOperation(operation);
-                incrementedOrDecrementIfThreadT2(name, operation);
-                sleep(1_000);
-            } finally {
-                lock.unlock();
-                last = name;
+            if (!name.equals(last)) {
+                try {
+                lock.lock();
+                    logger.info("number: {}", number);
+                    operation = getOperation(operation);
+                    incrementedOrDecrementIfThreadT2(name, operation);
+                    sleep(1);
+                } finally {
+                    lock.unlock();
+                    last = name;
+                }
             }
         }
     }
@@ -76,7 +78,7 @@ public class PrintingNumbers {
 
     private void sleep(int seconds) {
         try {
-            Thread.sleep(TimeUnit.SECONDS.toSeconds(seconds));
+            Thread.sleep(TimeUnit.SECONDS.toMillis(seconds));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
